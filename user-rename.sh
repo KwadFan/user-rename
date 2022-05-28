@@ -3,6 +3,10 @@
 set -ex
 
 
+### Setup
+SERVICES=(moonraker klipper nginx)
+
+
 ### Get User
 function get_user_name {
     DEFAULT_USER="$(grep "1000" /etc/passwd | awk -F ':' '{print $1}')"
@@ -11,9 +15,7 @@ function get_user_name {
 
 ### Stop services first
 function stop_services {
-    local -a services
-    services=(moonraker klipper nginx)
-    for srv in "${services[@]}"; do
+    for srv in "${SERVICES[@]}"; do
         sudo systemctl stop "${srv}.service"
     done
 }
