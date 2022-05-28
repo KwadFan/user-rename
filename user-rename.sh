@@ -5,7 +5,7 @@ set -ex
 
 ### Get User
 function get_user_name {
-    DEFAULT_USER="$(grep "1000" /etc/passwd | awk '{print $1}')"
+    DEFAULT_USER="$(grep "1000" /etc/passwd | awk -F ':' '{print $1}')"
     export DEFAULT_USER
 }
 
