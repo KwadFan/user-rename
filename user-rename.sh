@@ -5,6 +5,7 @@ set -ex
 
 ### Setup
 SERVICES=(moonraker klipper nginx)
+SYSTEMD_DIR="/etc/systemd/system"
 
 
 ### Get User
@@ -46,6 +47,10 @@ function change_service_user {
     servicefile=("${SERVICES[@]/nginx/}")
     
     echo "${servicefile[@]}"
+
+    for i in "${servicefile[@]}"; do
+        sudo sed -i 's|pi|${DEFAULT_USER}|g' "${SYSTEMD_DIR}/${i}.service"
+    done
     
     }
 
