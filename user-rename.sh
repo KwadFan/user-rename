@@ -51,7 +51,7 @@ function change_service_user {
 
 function relocate_venv {
     local -a venvs
-    venvs=(klippy-venv moonraker-venv)
+    venvs=(klippy-env moonraker-env)
 
     for venv in "${venvs[@]}"; do
         sudo -u "${DEFAULT_USER}" \
