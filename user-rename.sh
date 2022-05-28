@@ -4,7 +4,10 @@ set -ex
 
 
 ### Get User
-
+function get_user_name {
+    DEFAULT_USER="$(grep "1000" /etc/passwd | awk '{print $1}')"
+    export DEFAULT_USER
+}
 
 ### Stop services first
 function stop_services {
@@ -18,7 +21,7 @@ function stop_services {
 ### Change nginx root
 function change_www_root {
     sudo bash -c "
-        sed -i 's|/home/pi/mainsail|/home/${USER}/mainsail|g' \
+        sed -i 's|/home/pi/mainsail|/home/${DEFAULT_USER}/mainsail|g' \
         /etc/nginx/sites-available/mainsail
     "
 }
@@ -31,6 +34,7 @@ function change_www_root {
 
 
 ### Main
+get_user_name
 stop_services
 change_www_root
 
