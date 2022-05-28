@@ -49,7 +49,7 @@ function change_service_user {
     echo "${servicefile[@]}"
 
     for i in "${servicefile[@]}"; do
-        sudo sed -i 's|pi|${DEFAULT_USER}|g' "${SYSTEMD_DIR}/${i}.service"
+        sudo sed -i 's|pi|"${DEFAULT_USER}"|g' "${SYSTEMD_DIR}/${i}.service"
 
         ### DEBUG: display file
         cat "${SYSTEMD_DIR}/${i}.service"
