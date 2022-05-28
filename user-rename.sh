@@ -20,6 +20,12 @@ function stop_services {
     done
 }
 
+function start_services {
+    for srv in "${SERVICES[@]}"; do
+        sudo systemctl start "${srv}.service"
+    done
+}
+
 ### Change nginx root
 function change_www_root {
     sudo bash -c "
@@ -39,15 +45,4 @@ function change_www_root {
 get_user_name
 stop_services
 change_www_root
-
-
-
-
-### Restart services
-
-# for srv in "${SERVICES[@]}"; do
-#     sudo systemctl stop "${srv}.service"
-# done
-
-# Restart only nginx for now
-sudo systemctl start nginx.service
+start_services
