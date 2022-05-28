@@ -43,7 +43,7 @@ function change_www_root {
 function change_service_user {
     ### Filter nginx service first!
     local -a servicefile
-    servicefile=(${SERVICES[@]/nginx/})
+    servicefile=("${SERVICES[@]/nginx/}")
     
     echo "${servicefile[@]}"
     
