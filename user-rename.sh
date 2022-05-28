@@ -49,10 +49,24 @@ function change_service_user {
     done
 }
 
+function relocate_venv {
+    local -a venvs
+    venvs=(klippy-venv moonraker-venv)
 
+    for venv in "${venvs[@]}"; do
+        sudo -u "${DEFAULT_USER}" \
+        virtualenv --relocatable "${HOME}/${venv}"
+    done
+}
 
-
-
+function reinstall_polkit_rules {
+    pushd /home/"${DEFAULT_USER}"/moonraker &> /dev/null || exit 1
+        ## Clear rules
+        sudo ./scripts/set-policykit-rules.sh -c
+        ## Install rules
+        sudo ./scripts/set-policykit-rules.sh -z
+    popd &> /dev/null || exit 1
+}
 
 
 ### Main
@@ -60,5 +74,10 @@ get_user_name
 stop_services
 change_www_root
 change_service_user
+relocate_venv
+reinstall_polkit_rules
 sudo systemctl daemon-reload
 start_services
+sleep 5
+sudo reboot
+
