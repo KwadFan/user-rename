@@ -43,7 +43,9 @@ function change_service_user {
     servicefile=( "${SERVICES[@]/nginx}" )
 
     for i in "${servicefile[@]}"; do
+        if [ -n "${i}" ]; then
         sudo -E sed -i 's/pi/'"${DEFAULT_USER}"'/g' "${SYSTEMD_DIR}/${i}.service"
+        fi
     done
 }
 
