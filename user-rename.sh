@@ -40,7 +40,7 @@ function change_www_root {
 function change_service_user {
     ### Filter nginx service first!
     local -a servicefile
-    servicefile=("${SERVICES[@]/nginx}")
+    servicefile=( "${SERVICES[@]/nginx}" )
 
     for i in "${servicefile[@]}"; do
         sudo -E sed -i 's/pi/'"${DEFAULT_USER}"'/g' "${SYSTEMD_DIR}/${i}.service"
