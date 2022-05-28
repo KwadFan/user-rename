@@ -68,7 +68,7 @@ function reinstall_polkit_rules {
         export ROOT
         export DISABLE_SYSTEMCTL
         ## Install rules
-        sudo -E ./scripts/set-policykit-rules.sh 
+        sudo -E ./scripts/set-policykit-rules.sh -r
     popd &> /dev/null || exit 1
 }
 
