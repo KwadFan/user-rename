@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 ### Stop services first
 
 SERVICES=(moonraker klipper nginx)
