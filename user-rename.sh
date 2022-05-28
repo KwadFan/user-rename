@@ -62,7 +62,7 @@ function relocate_venv {
 function reinstall_polkit_rules {
     pushd /home/"${DEFAULT_USER}"/moonraker &> /dev/null || exit 1
         ## Clear rules
-        sudo ./scripts/set-policykit-rules.sh -c
+        sudo CLEAR="y" ROOT="y" ./scripts/set-policykit-rules.sh
         ## Install rules
         sudo ./scripts/set-policykit-rules.sh -z
     popd &> /dev/null || exit 1
