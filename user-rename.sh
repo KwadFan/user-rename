@@ -13,7 +13,7 @@ function get_user_name {
     export DEFAULT_USER
 }
 
-### Stop services first
+### Mangle services
 function stop_services {
     for srv in "${SERVICES[@]}"; do
         sudo systemctl stop "${srv}.service"
@@ -39,6 +39,16 @@ function change_www_root {
 }
 
 
+### change username in service files
+function change_service_user {
+    ### Filter nginx service first!
+    local -a servicefile
+    servicefile=(${SERVICES[@]/nginx/})
+    
+    echo "${servicefile[@]}"
+    
+    }
+
 
 
 
@@ -49,5 +59,6 @@ function change_www_root {
 get_user_name
 stop_services
 change_www_root
+change_service_user
 reload_daemons
 start_services
