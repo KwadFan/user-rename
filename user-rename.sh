@@ -26,6 +26,10 @@ function start_services {
     done
 }
 
+function reload_daemons {
+    sudo systemctl daemon-reload
+}
+
 ### Change nginx root
 function change_www_root {
     sudo bash -c "
@@ -45,4 +49,5 @@ function change_www_root {
 get_user_name
 stop_services
 change_www_root
+reload_daemons
 start_services
