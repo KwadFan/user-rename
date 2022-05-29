@@ -4,7 +4,7 @@ set -ex
 
 
 ### Setup
-SERVICES=(moonraker klipper nginx)
+SERVICES=(moonraker klipper nginx sonar webcamd)
 SYSTEMD_DIR="/etc/systemd/system"
 
 
@@ -66,6 +66,22 @@ function reinstall_polkit_rules {
     popd &> /dev/null || exit 1
 }
 
+## Fix broken links
+function fix_broken_links {
+    local -a brokenlinks
+    local path
+    brokenlinks=(webcamd sonar)
+    path="/usr/local/bin"
+
+    for bl in "${brokenlinks[@]}"; do
+        if [ -h "${path}/${bl}" ]; then
+            sudo rm -rf "${path}/${bl}"
+        fi
+        find "/home/${DEFAULT_USER}" -type f -iname "${bl}" -print0 | \
+        xargs -0 -i sudo ln -s {} "${path}/${bl}"
+    done
+}
+
 
 ### Main
 get_user_name
@@ -74,8 +90,10 @@ change_www_root
 change_service_user
 relocate_venv
 reinstall_polkit_rules
+fix_broken_links
+sleep 2
 sudo systemctl daemon-reload
 start_services
-sleep 5
+sleep 2
 sudo reboot
 
